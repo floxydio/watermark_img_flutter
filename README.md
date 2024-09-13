@@ -43,6 +43,8 @@ The 'child' in ScreenWatermark is required and can be combined with any widget y
 
 For the process of saving an image, it can be combined with other packages. You can check example/main.dart for more details. Below is an example of a button that initiates the save process.
 
+or this link [example/main.dart](https://github.com/floxydio/watermark_img_flutter/tree/master/example/lib)
+
 ```dart
 ElevatedButton(
                   onPressed: () async {
