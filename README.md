@@ -9,7 +9,7 @@ The purpose of creating watermark_img is to add a widget to an image, for exampl
 Import this package to pubspec.yaml
 
 ```dart
-watermark_img: 0.0.3
+watermark_img: 0.0.4
 ```
 
 And for its usage, I have already created it in example/main.dart.
@@ -46,58 +46,62 @@ For the process of saving an image, it can be combined with other packages. You 
 or this link [example/main.dart](https://github.com/floxydio/watermark_img_flutter/tree/master/example)
 
 ```dart
-ElevatedButton(
+   ElevatedButton(
                   onPressed: () async {
-                    final Uint8List bytes = await WaterMarkImg.convertImgToUint(
-                        renderKey: KeyWatermark().key);
-                    final File? file = await WaterMarkImg()
-                        .saveImageFromUint8List(bytes, 'watermark.png');
+                    final Uint8List? bytes =
+                        await WaterMarkImg.convertImgToUint(
+                            renderKey: KeyWatermark().key);
+                    if (bytes != null) {
+                      final File? file = await WaterMarkImg()
+                          .saveImageFromUint8List(bytes, 'watermark.png');
 
-                    setState(() {
-                      fileImage = XFile(file!.path);
-                    });
-                    if (file != null) {
-                      if (Platform.isAndroid) {
-                        final deviceInfo = DeviceInfoPlugin();
-                        final androidSdk = await deviceInfo.androidInfo;
-                        if (androidSdk.version.sdkInt >= 33) {
-                          if (await _requestPhotosPermission()) {
-                            final directory = await getTemporaryDirectory();
-                            final file =
-                                File('${directory.path}/watermark.png');
-                            await file.writeAsBytes(bytes);
-                            final result =
-                                await ImageGallerySaver.saveImage(bytes);
-                            if (result != null) {
-                              print('Image saved');
-                              fileImage = XFile(file.path);
+                      setState(() {
+                        fileImage = XFile(file!.path);
+                      });
+                      if (file != null) {
+                        if (Platform.isAndroid) {
+                          final deviceInfo = DeviceInfoPlugin();
+                          final androidSdk = await deviceInfo.androidInfo;
+                          if (androidSdk.version.sdkInt >= 33) {
+                            if (await _requestPhotosPermission()) {
+                              final directory = await getTemporaryDirectory();
+                              final file =
+                                  File('${directory.path}/watermark.png');
+                              await file.writeAsBytes(bytes);
+                              final result =
+                                  await ImageGallerySaver.saveImage(bytes);
+                              if (result != null) {
+                                // print('Image saved');
+                                fileImage = XFile(file.path);
+                              }
+                            }
+                          } else {
+                            if (await _requestStoragePermission()) {
+                              final directory = await getTemporaryDirectory();
+                              final file =
+                                  File('${directory.path}/watermark.png');
+                              await file.writeAsBytes(bytes);
+                              final result =
+                                  await ImageGallerySaver.saveFile(file.path);
+                              if (result != null) {
+                                // print('Image saved');
+                                fileImage = XFile(file.path);
+                              }
                             }
                           }
-                        } else {
-                          if (await _requestStoragePermission()) {
-                            final directory = await getTemporaryDirectory();
-                            final file =
-                                File('${directory.path}/watermark.png');
-                            await file.writeAsBytes(bytes);
-                            final result =
-                                await ImageGallerySaver.saveFile(file.path);
-                            if (result != null) {
-                              print('Image saved');
-                              fileImage = XFile(file.path);
-                            }
+                        } else if (Platform.isIOS) {
+                          final directory = await getTemporaryDirectory();
+                          final file = File('${directory.path}/watermark.png');
+                          await file.writeAsBytes(bytes);
+                          final result =
+                              await ImageGallerySaver.saveImage(bytes);
+                          if (result != null) {
+                            // print('Image saved');
+                            fileImage = XFile(file.path);
                           }
-                        }
-                      } else if (Platform.isIOS) {
-                        final directory = await getTemporaryDirectory();
-                        final file = File('${directory.path}/watermark.png');
-                        await file.writeAsBytes(bytes);
-                        final result = await ImageGallerySaver.saveImage(bytes);
-                        if (result != null) {
-                          print('Image saved');
-                          fileImage = XFile(file.path);
                         }
                       }
-                    } else {}
+                    }
                   },
                   child: const Text("Check Image + Save")),
 ```
@@ -108,9 +112,10 @@ This package uses RepaintBoundary and Key in a StatefulWidget, but I have simpli
 
 ## Change Log
 
-0.0.1 - Initial release
-0.0.2 - Update README.md
-0.0.3 - Fix Null Safety
+* 0.0.1 - Initial release 
+* 0.0.2 - Update README.md
+* 0.0.3 - Fix Null Safety
+* 0.0.4 - Update README.md and Tutorial
 
 ## TODO For Next Version
 
