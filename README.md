@@ -9,7 +9,7 @@ The purpose of creating watermark_img is to add a widget to an image, for exampl
 Import this package to pubspec.yaml
 
 ```dart
-watermark_img: 0.0.1
+watermark_img: 0.0.3
 ```
 
 And for its usage, I have already created it in example/main.dart.
@@ -105,6 +105,12 @@ ElevatedButton(
 
 This package uses RepaintBoundary and Key in a StatefulWidget, but I have simplified it further.
 
+
+## Change Log
+
+0.0.1 - Initial release
+0.0.2 - Update README.md
+0.0.3 - Fix Null Safety
 
 ## TODO For Next Version
 

@@ -1,6 +1,6 @@
 name: watermark_img
 description: "Simply add watermark to image"
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/floxydio/watermark_img_flutter
 
 environment:
