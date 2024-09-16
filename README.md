@@ -12,6 +12,8 @@ Import this package to pubspec.yaml
 watermark_img: 0.0.4
 ```
 
+## Base Feature
+
 And for its usage, I have already created it in example/main.dart.
 
 Simply call the widget.
@@ -106,6 +108,17 @@ or this link [example/main.dart](https://github.com/floxydio/watermark_img_flutt
                   child: const Text("Check Image + Save")),
 ```
 
+## Saver (New 0.0.5)
+
+```dart
+ var toFile = File(fileImage!.path); // convert from Xfile to File
+                    toFile.toBase64().then((value) {
+                      if (kDebugMode) {
+                        print(value); // print base64
+                      }
+                    });
+```
+
 
 This package uses RepaintBoundary and Key in a StatefulWidget, but I have simplified it further.
 
@@ -116,12 +129,14 @@ This package uses RepaintBoundary and Key in a StatefulWidget, but I have simpli
 * 0.0.2 - Update README.md
 * 0.0.3 - Fix Null Safety
 * 0.0.4 - Update README.md and Tutorial
+* 0.0.5 - Update Saver to Base64
 
 ## TODO For Next Version
 
 - Can this package be used repeatedly within a single state or not?
 - Testing this package for iOS
 - Testing this package all Android versions
+- Unit Testing
 
 If there are any bugs or errors in the package, or if you have ideas for new features, feel free to create a pull request on GitHub.
 

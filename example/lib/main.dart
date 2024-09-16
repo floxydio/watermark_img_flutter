@@ -2,12 +2,14 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:watermark_img/watermark_img.dart';
+import 'package:watermark_img/helpers/saver.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -138,6 +140,17 @@ class _MyAppState extends State<MyApp> {
                       height: 300,
                     )
                   : const Text("No Image Found"),
+              ElevatedButton(
+                  onPressed: () {
+                    var toFile =
+                        File(fileImage!.path); // convert from Xfile to File
+                    toFile.toBase64().then((value) {
+                      if (kDebugMode) {
+                        print(value); // print base64
+                      }
+                    });
+                  },
+                  child: const Text("Convert to base64")),
             ],
           ),
         ),
